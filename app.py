@@ -6,8 +6,10 @@ url = 'https://ckan.opendata.swiss/api/3/action/organization_list?all_fields=Tru
 res = requests.get(url)
 organizations = res.json()['result']
 
-date_from = datetime.strptime('1 Jan 2020', '%d %b %Y').isoformat()
-date_to = datetime.strptime('31 Dec 2020', '%d %b %Y').isoformat()
+"""
+The below function loops over the fetched organizations, and for each organization, it will search for datasets 
+created in 2020, where the owner_org ID matches with the ID passed in the url as a parameter.
+"""
 
 # This object will just have the organization with the highest number of datasets
 most_packages = {
@@ -15,10 +17,8 @@ most_packages = {
     'count': 0
 }
 
-"""
-The below function loops over the fetched organizations, and for each organization, it will search for datasets 
-created in 2020, where the owner_org ID matches with the ID passed in the url as a parameter.
-"""
+date_from = datetime.strptime('1 Jan 2020', '%d %b %Y').isoformat()
+date_to = datetime.strptime('31 Dec 2020', '%d %b %Y').isoformat()
 
 for organization in organizations:
     res = requests.get(f'https://ckan.opendata.swiss/api/3/action/package_search?q=owner_org:{organization["id"]}'
