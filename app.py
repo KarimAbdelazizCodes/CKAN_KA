@@ -1,9 +1,13 @@
 import requests
+from datetime import datetime
 
 # first I fetched all organizations with "all_fields" set to True, so I could get the organization ID
 url = 'https://ckan.opendata.swiss/api/3/action/organization_list?all_fields=True'
 res = requests.get(url)
 organizations = res.json()['result']
+
+date_from = datetime.strptime('1 Jan 2020', '%d %b %Y').isoformat()
+date_to = datetime.strptime('31 Dec 2020', '%d %b %Y').isoformat()
 
 # This object will just have the organization with the highest number of datasets
 most_packages = {
@@ -18,7 +22,7 @@ created in 2020, where the owner_org ID matches with the ID passed in the url as
 
 for organization in organizations:
     res = requests.get(f'https://ckan.opendata.swiss/api/3/action/package_search?q=owner_org:{organization["id"]}'
-                       f'&fq=metadata_created:[2020-01-01T23:59:59.999Z TO 2020-12-31T00:00:00Z]')
+                       f'&fq=metadata_created:[{date_from}Z TO {date_to}Z]')
 
     result = res.json()['result']
 
