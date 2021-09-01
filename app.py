@@ -31,8 +31,8 @@ for organization in organizations:
         most_packages['count'] = result['count']
         most_packages['org'] = result['results'][0]['organization']['display_name']['de']
 
-print(most_packages)  # prints {'org': 'Bundesamt für Statistik BFS', 'count': 866}
+print(most_packages)  # prints {'org': 'Bundesamt für Statistik BFS', 'count': 820}
 
 """
-'Bundesamt für Statistik BFS' had the most dataset entries in year 2020, with 866 datasets.
+'Bundesamt für Statistik BFS' had the most dataset entries in year 2020, with 820 datasets.
 """
