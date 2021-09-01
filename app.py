@@ -4,7 +4,7 @@ from datetime import datetime
 baseurl = 'https://ckan.opendata.swiss/api/3/action/'
 
 # first I fetched all organizations with "all_fields" set to True, so I could get the organization ID
-res = requests.get(baseurl + 'organization_list?all_fields=True')
+res = requests.get(f'{baseurl}organization_list?all_fields=True')
 organizations = res.json()['result']
 
 """
@@ -22,7 +22,7 @@ date_from = datetime.strptime('1 Jan 2020', '%d %b %Y').isoformat()
 date_to = datetime.strptime('31 Dec 2020', '%d %b %Y').isoformat()
 
 for organization in organizations:
-    res = requests.get(baseurl + f'package_search?q=owner_org:{organization["id"]}'
+    res = requests.get(f'{baseurl}package_search?q=owner_org:{organization["id"]}'
                        f'&fq=metadata_created:[{date_from}Z TO {date_to}Z]')
 
     result = res.json()['result']
